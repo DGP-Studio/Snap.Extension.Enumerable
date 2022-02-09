@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Snap.Extenion.Enumerable
 {
-    public static class EnumerableExtensions
+    public static class LinqExtensions
     {
         public static IEnumerable<T> NotNull<T>(this IEnumerable<T?> source)
         {
