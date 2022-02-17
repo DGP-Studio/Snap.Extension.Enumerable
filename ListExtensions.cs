@@ -1,4 +1,5 @@
 ﻿using Snap.Data.Primitive;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -29,6 +30,14 @@ namespace Snap.Extenion.Enumerable
         public static List<T> ClonePartially<T>(this List<T> listToClone) where T : IPartiallyCloneable<T>
         {
             return listToClone.Select(item => item.ClonePartially()).ToList();
+        }
+
+        private static Lazy<Random> random = new(() => new());
+        public static T? GetRandom<T>(this List<T> list)
+        {
+            return list.Count > 0 
+                ? list[random.Value.Next(0, list.Count)] 
+                : default;
         }
     }
 }
