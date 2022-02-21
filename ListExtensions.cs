@@ -35,8 +35,8 @@ namespace Snap.Extenion.Enumerable
         private static Lazy<Random> random = new(() => new());
         public static T? GetRandom<T>(this List<T> list)
         {
-            return list.Count > 0 
-                ? list[random.Value.Next(0, list.Count)] 
+            return list.Count > 0
+                ? list[random.Value.Next(0, list.Count)]
                 : default;
         }
     }
