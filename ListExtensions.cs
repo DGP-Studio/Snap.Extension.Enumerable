@@ -32,7 +32,7 @@ namespace Snap.Extenion.Enumerable
             return listToClone.Select(item => item.ClonePartially()).ToList();
         }
 
-        private static Lazy<Random> random = new(() => new());
+        private static readonly Lazy<Random> random = new(() => new());
         public static T? GetRandom<T>(this List<T> list)
         {
             return list.Count > 0
