@@ -30,5 +30,18 @@ namespace Snap.Extenion.Enumerable
                 action(item);
             }
         }
+
+        /// <summary>
+        /// condition ? source.Where(predicate) : source;
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="predicate"></param>
+        /// <param name="condition"></param>
+        /// <returns></returns>
+        public static IEnumerable<T> WhereWhen<T>(this IEnumerable<T> source,Func<T,bool> predicate,bool condition)
+        {
+            return condition ? source.Where(predicate) : source;
+        }
     }
 }
