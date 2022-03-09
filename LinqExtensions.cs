@@ -23,6 +23,12 @@ namespace Snap.Extenion.Enumerable
             return source.FirstOrDefault(predicate) ?? source.FirstOrDefault();
         }
 
+        /// <summary>
+        /// 立即展开迭代器，并对其中的项进行枚举
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="action"></param>
         public static void ForEach<T>(this IEnumerable<T> source, Action<T> action)
         {
             foreach (T item in source)
@@ -39,7 +45,7 @@ namespace Snap.Extenion.Enumerable
         /// <param name="predicate"></param>
         /// <param name="condition"></param>
         /// <returns></returns>
-        public static IEnumerable<T> WhereWhen<T>(this IEnumerable<T> source,Func<T,bool> predicate,bool condition)
+        public static IEnumerable<T> WhereWhen<T>(this IEnumerable<T> source, Func<T, bool> predicate, bool condition)
         {
             return condition ? source.Where(predicate) : source;
         }
