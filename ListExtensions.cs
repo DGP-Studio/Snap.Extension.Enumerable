@@ -39,5 +39,23 @@ namespace Snap.Extenion.Enumerable
                 ? list[random.Value.Next(0, list.Count)]
                 : default;
         }
+        public static T? GetRandomNotRepeat<T>(this List<T> list, Func<T, bool> checkRepeat)
+        {
+            if (list.Count >= 2)
+            {
+                T? random;
+
+                do
+                {
+                    random = list.GetRandom();
+                }
+                while (!checkRepeat.Invoke(random!));
+                return random;
+            }
+            else
+            {
+                return list.GetRandom();
+            }
+        }
     }
 }
