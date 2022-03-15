@@ -39,7 +39,16 @@ namespace Snap.Extenion.Enumerable
                 ? list[random.Value.Next(0, list.Count)]
                 : default;
         }
-        public static T? GetRandomNotRepeat<T>(this List<T> list, Func<T, bool> checkRepeat)
+
+        /// <summary>
+        /// 在列表中获取随机的不重复项目
+        /// 使用默认的比较器比较与上个项目的不同
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="lastItem"></param>
+        /// <returns></returns>
+        public static T? GetRandomNoRepeat<T>(this List<T> list,T? lastItem)
         {
             if (list.Count >= 2)
             {
@@ -49,7 +58,26 @@ namespace Snap.Extenion.Enumerable
                 {
                     random = list.GetRandom();
                 }
-                while (!checkRepeat.Invoke(random!));
+                while (EqualityComparer<T>.Default.Equals(lastItem, random));
+                return random;
+            }
+            else
+            {
+                return list.GetRandom();
+            }
+        }
+
+        public static T? GetRandomNoRepeat<T>(this List<T> list, Func<T?, bool> duplicationEvaluator)
+        {
+            if (list.Count >= 2)
+            {
+                T? random;
+
+                do
+                {
+                    random = list.GetRandom();
+                }
+                while (!duplicationEvaluator.Invoke(random));
                 return random;
             }
             else
