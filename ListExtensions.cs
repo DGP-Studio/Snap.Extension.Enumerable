@@ -48,7 +48,7 @@ namespace Snap.Extenion.Enumerable
         /// <param name="list"></param>
         /// <param name="lastItem"></param>
         /// <returns></returns>
-        public static T? GetRandomNoRepeat<T>(this List<T> list,T? lastItem)
+        public static T? GetRandomNoRepeat<T>(this List<T> list, T? lastItem)
         {
             if (list.Count >= 2)
             {
