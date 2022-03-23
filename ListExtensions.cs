@@ -27,6 +27,10 @@ namespace Snap.Extenion.Enumerable
             }
         }
 
+        public static List<T> Clone<T>(this List<T> listToClone) where T : ICloneable<T>
+        {
+            return listToClone.Select(item => item.Clone()).ToList();
+        }
         public static List<T> ClonePartially<T>(this List<T> listToClone) where T : IPartiallyCloneable<T>
         {
             return listToClone.Select(item => item.ClonePartially()).ToList();
