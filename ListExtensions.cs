@@ -89,5 +89,10 @@ namespace Snap.Extenion.Enumerable
                 return list.GetRandom();
             }
         }
+
+        public static bool ExistsIndex<T>(this List<T> list, int index)
+        {
+            return index > 0 && index < list.Count;
+        }
     }
 }
