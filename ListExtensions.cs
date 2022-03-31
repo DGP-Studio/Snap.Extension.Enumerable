@@ -1,19 +1,21 @@
 ﻿using Snap.Data.Primitive;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Snap.Extenion.Enumerable
 {
+    /// <summary>
+    /// <see cref="List{T}"/>扩展方法
+    /// </summary>
     public static class ListExtensions
     {
         /// <summary>
         /// 向列表添加物品，检测是否为空
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="list"></param>
-        /// <param name="item"></param>
-        /// <returns></returns>
+        /// <typeparam name="T">列表内部类型</typeparam>
+        /// <param name="list">列表</param>
+        /// <param name="item">新的项</param>
+        /// <returns>是否添加</returns>
         public static bool AddIfNotNull<T>(this List<T> list, T? item)
         {
             if (item is not null)
@@ -27,69 +29,37 @@ namespace Snap.Extenion.Enumerable
             }
         }
 
-        public static List<T> Clone<T>(this List<T> listToClone) where T : ICloneable<T>
+        /// <summary>
+        /// 克隆列表，对其中存储的实例也进行克隆
+        /// </summary>
+        /// <typeparam name="T">列表内部类型</typeparam>
+        /// <param name="listToClone">列表</param>
+        /// <returns>克隆的列表</returns>
+        public static List<T> Clone<T>(this List<T> listToClone)
+            where T : ICloneable<T>
         {
             return listToClone.Select(item => item.Clone()).ToList();
         }
-        public static List<T> ClonePartially<T>(this List<T> listToClone) where T : IPartiallyCloneable<T>
+
+        /// <summary>
+        /// 部分克隆列表，对其中存储的实例也进行部分克隆
+        /// </summary>
+        /// <typeparam name="T">列表内部类型</typeparam>
+        /// <param name="listToClone">列表</param>
+        /// <returns>部分克隆的列表</returns>
+        public static List<T> ClonePartially<T>(this List<T> listToClone)
+            where T : IPartiallyCloneable<T>
         {
             return listToClone.Select(item => item.ClonePartially()).ToList();
         }
 
-        private static readonly Lazy<Random> random = new(() => new());
-        public static T? GetRandom<T>(this List<T> list)
-        {
-            return list.Count > 0
-                ? list[random.Value.Next(0, list.Count)]
-                : default;
-        }
-
         /// <summary>
-        /// 在列表中获取随机的不重复项目
-        /// 使用默认的比较器比较与上个项目的不同
+        /// 检查列表是否存在对应的索引
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="list"></param>
-        /// <param name="lastItem"></param>
-        /// <returns></returns>
-        public static T? GetRandomNoRepeat<T>(this List<T> list, T? lastItem)
-        {
-            if (list.Count >= 2)
-            {
-                T? random;
-
-                do
-                {
-                    random = list.GetRandom();
-                }
-                while (EqualityComparer<T>.Default.Equals(lastItem, random));
-                return random;
-            }
-            else
-            {
-                return list.GetRandom();
-            }
-        }
-
-        public static T? GetRandomNoRepeat<T>(this List<T> list, Func<T?, bool> duplicationEvaluator)
-        {
-            if (list.Count >= 2)
-            {
-                T? random;
-
-                do
-                {
-                    random = list.GetRandom();
-                }
-                while (!duplicationEvaluator.Invoke(random));
-                return random;
-            }
-            else
-            {
-                return list.GetRandom();
-            }
-        }
-
+        /// <typeparam name="T">列表内部类型</typeparam>
+        /// <param name="list">列表</param>
+        /// <param name="index">待检查的索引</param>
+        /// <returns>对应的索引是否有效</returns>
         public static bool ExistsIndex<T>(this List<T> list, int index)
         {
             return index > 0 && index < list.Count;
