@@ -60,7 +60,7 @@ namespace Snap.Extenion.Enumerable
         /// <param name="list">列表</param>
         /// <param name="index">待检查的索引</param>
         /// <returns>对应的索引是否有效</returns>
-        public static bool ExistsIndex<T>(this List<T> list, int index)
+        public static bool ExistsIndex<T>(this IList<T> list, int index)
         {
             return index > 0 && index < list.Count;
         }
